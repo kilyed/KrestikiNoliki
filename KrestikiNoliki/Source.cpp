@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstring>
+#include <stdio.h>
+#include <cstdio>
 using namespace std;
 char win = '-'; 
 char PlayerName1[80], PlayerName2[80]; 
@@ -24,13 +26,13 @@ void make_move(int num) {
     if (num == 1) cout << PlayerName1;
     else cout << PlayerName2;
     int cell;
-    cout << ",введите номер €чейки,сделайте свой ход:";
+    cout << ",Enter number cell for step:";
     cin >> cell;
    
 
        
     while (cell > 9 || cell < 1 || cells[cell - 1] == 'O' || cells[cell - 1] == 'X')
-        cout << "¬ведите номер правильного ( 1-9 ) или пустой ( --- ) клетки , чтобы сделать ход:";
+        cout << "Enter number cell;";
     cin >> cell;
     cout << "\n";
    
@@ -59,7 +61,38 @@ void result() {
     else if (win == 'O') cout << PlayerName2 << "You Win!  " << PlayerName1 << " or you lose..." << endl;
 
 }
-void main()
-{
+int main(int argc, char** argv) {
+
+
+
+    do {
+        cout << "Input name first player : ";
+        cin >> PlayerName1;
+
+        cout << "Input name second player: ";
+        cin >> PlayerName2;
+        cout << "\n";
+    } while (!strcmp(PlayerName1, PlayerName2));
+   
     show_cells();
+
+    for (int move = 1; move <= 9; move++) {
+        if (move % 2) make_move(1); 
+        else make_move(2);
+
+        show_cells();
+      
+        if (move >= 5)
+        {
+            win = check();
+            if (win != '-')
+                break;
+        }
+       
+
+    }
+
+    result();
+    system("pause");
+    return 0;
 }
